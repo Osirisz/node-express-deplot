@@ -15,6 +15,25 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - setup_remote_docker
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - run:
+          name: "push to docker hub"
+          command: 
+          docker build -t osirisz/node-express-deploy:lastest .
+          docker push osirisz/node-express-deploy:lastest
+      - run:
+          name: "deploy to rancher"
+          command: |
+          docker run --rm -it \
+            -e $CATTLE_ACCESS_KEY="$CATTLE_ACCESS_KEY" \
+            -e $CATTLE_SECRET_KEY="$CATTLE_SECRET_KEY" \
+            -e $CATTLE_URL="$CATTLE_URL" \
+            etlweather/gaucho upgrade $RANCHER_DEPLOY \
+            --imageUuid 'docker:osirisz/node-express-deploy:lastest' \
+            --batch_size:2 --start_first \
+            --auto_complete --timeout 600 \
+            /
       - run: echo Done
 
       # osirisz/node-express-deploy

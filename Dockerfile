@@ -7,4 +7,4 @@ WORKDIR /app
 
 CMD ["node", "app/app.js"]
 
-EXPOSE 3000
+EXPOSE 3001
