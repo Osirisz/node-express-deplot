@@ -2,9 +2,10 @@ FROM node:8.11-alpine
 
 RUN mkdir -p /app
 
-COPY . /app.js
+COPY / /app
+
 WORKDIR /app
 
-CMD ["node", "/app.js"]
+CMD ["node","bin/www"]
 
-EXPOSE 3001
+EXPOSE 3000
