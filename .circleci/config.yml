@@ -19,7 +19,7 @@ jobs:
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - run:
           name: "push to docker hub"
-          command: 
+          command: |
             docker build -t osirisz/node-express-deploy:lastest .
             docker push osirisz/node-express-deploy:lastest
       - run:
