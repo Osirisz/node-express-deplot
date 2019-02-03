@@ -5,6 +5,6 @@ RUN mkdir -p /app
 COPY . /app.js
 WORKDIR /app
 
-CMD ["node", "app/app.js"]
+CMD ["node", "/app.js"]
 
 EXPOSE 3001
